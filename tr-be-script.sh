@@ -132,12 +132,15 @@ clear
 echo
 echo "Installing Required Packages!"
 echo
-sudo apt-get install git-core gnupg flex bison gperf build-essential \
-zip curl zlib1g-dev libc6-dev libncurses5-dev x11proto-core-dev \
-libx11-dev libreadline6-dev libgl1-mesa-dev tofrodos python-markdown \
-libxml2-utils xsltproc pngcrush gcc-multilib lib32z1 schedtool \
-libqt4-dev lib32stdc++6 libx11-dev:i386 g++-multilib lib32z1-dev \
-lib32ncurses5-dev ia32-libs mingw32 lib32z-dev
+sudo apt-get update
+sudo apt-get install git gnupg flex bison gperf build-essential \
+zip curl libc6-dev libncurses5-dev:i386 x11proto-core-dev \
+libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \
+libgl1-mesa-dev g++-multilib mingw32 tofrodos \
+python-markdown libxml2-utils xsltproc zlib1g-dev:i386 \
+android-tools-adb android-tools-fastboot libcloog-isl-dev \
+texinfo gcc-multilib \
+sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
 if [ ${SKIP} = 1 ]; then
   echo "Unattended installation. skipping pause..."
