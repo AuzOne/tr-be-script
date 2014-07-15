@@ -97,10 +97,11 @@ clear
 echo
 echo "Installing JDK 6!"
 echo
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java6-installer
-java -version
+wget https://launchpad.net/~webupd8team/+archive/ubuntu/java/+files/oracle-java6-installer_6u45-0%7Ewebupd8%7E8_all.deb
+sudo dpkg -i oracle-java6-installer_6u45-0~webupd8~8_all.deb
+wget https://launchpad.net/~webupd8team/+archive/ubuntu/java/+files/oracle-java6-set-default_6u45-0%7Ewebupd8%7E8_all.deb
+sudo dpkg -i oracle-java6-set-default_6u45-0~webupd8~8_all.deb
+
 
 if [ ${SKIP} = 1 ]; then
   echo "Unattended installation. skipping pause..."
@@ -139,8 +140,7 @@ libx11-dev:i386 libreadline6-dev:i386 libgl1-mesa-glx:i386 \
 libgl1-mesa-dev g++-multilib mingw32 tofrodos \
 python-markdown libxml2-utils xsltproc zlib1g-dev:i386 \
 android-tools-adb android-tools-fastboot libcloog-isl-dev \
-texinfo gcc-multilib \
-schedtool libxml2-utils libxml2 \
+texinfo gcc-multilib schedtool libxml2-utils libxml2 $PARAM
 
 sudo ln -s /usr/lib/i386-linux-gnu/mesa/libGL.so.1 /usr/lib/i386-linux-gnu/libGL.so
 
@@ -197,14 +197,14 @@ if [ `getconf LONG_BIT` = "64" ]
 then
         echo
         echo "Downloading SDK for 64bit Linux System"
-        wget http://dl.google.com/android/adt/adt-bundle-linux-x86_64-20131030.zip
+        wget http://dl.google.com/android/adt/adt-bundle-linux-x86_64-20140702.zip
         echo "Download Complete!!"
         echo "Extracting"
         mkdir ~/adt-bundle
-        mv adt-bundle-linux-x86_64-20131030.zip ~/adt-bundle/adt_x64.zip
+        mv adt-bundle-linux-x86_64-20140702.zip ~/adt-bundle/adt_x64.zip
         cd ~/adt-bundle
         unzip adt_x64.zip
-        mv -f adt-bundle-linux-x86_64-20131030/* .
+        mv -f adt-bundle-linux-x86_64-20140702/* .
         echo "Configuring environment"
         echo -e '\n# Android tools\nexport PATH=${PATH}:~/adt-bundle/sdk/tools\nexport PATH=${PATH}:~/adt-bundle/sdk/platform-tools\nexport PATH=${PATH}:~/bin' >> ~/.bashrc
         echo -e '\nPATH="$HOME/adt-bundle/sdk/tools:$HOME/adt-bundle/sdk/platform-tools:$PATH"' >> ~/.profile
@@ -216,14 +216,14 @@ else
 
         echo
         echo "Downloading SDK for 32bit Linux System"
-        wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20131030.zip
+        wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
         echo "Download Complete!!"
         echo "Extracting"
         mkdir ~/adt-bundle
-        mv adt-bundle-linux-x86-20131030.zip ~/adt-bundle/adt_x86.zip
+        mv adt-bundle-linux-x86-20140702.zip ~/adt-bundle/adt_x86.zip
         cd ~/adt-bundle
         unzip adt_x86.zip
-        mv -f adt-bundle-linux-x86_64-20131030/* .
+        mv -f adt-bundle-linux-x86_64-20140702/* .
         echo "Configuring environment"
         echo -e '\n# Android tools\nexport PATH=${PATH}:~/adt-bundle/sdk/tools\nexport PATH=${PATH}:~/adt-bundle/sdk/platform-tools\nexport PATH=${PATH}:~/bin' >> ~/.bashrc
         echo -e '\nPATH="$HOME/adt-bundle/sdk/tools:$HOME/adt-bundle/sdk/platform-tools:$PATH"' >> ~/.profile
@@ -270,11 +270,13 @@ rm -f ~/tr-be-script/make-3.82.tar.gz
 rm -rf ~/tr-be-script/make-3.82
 rm -f ~/tr-be-script/ccache-3.1.9.tar.gz
 rm -rf ~/tr-be-script/ccache-3.1.9
-rm -rf ~/adt-bundle/adt-bundle-linux-x86_64-20131030
-rm -rf ~/adt-bundle/adt-bundle-linux-x86-20131030
+rm -rf ~/adt-bundle/adt-bundle-linux-x86_64-20140702
+rm -rf ~/adt-bundle/adt-bundle-linux-x86-20140702
 rm -f ~/adt-bundle/adt_x64.zip
 rm -f ~/adt-bundle/adt_x86.zip
 rm -f ~/tr-be-script/master.zip
+rm -f ~/oracle-java6-installer_6u45-0~webupd8~8_all.deb
+rm -f ~/oracle-java6-set-default_6u45-0~webupd8~8_all.deb
 
 clear
 
