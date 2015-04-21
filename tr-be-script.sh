@@ -56,13 +56,13 @@ echo
 echo "Installing Python!"
 echo
 sudo apt-get install build-essential gcc $PARAM
-wget http://www.python.org/ftp/python/3.3.2/Python-3.3.2.tgz
-tar -xvzf Python-3.3.2.tgz
-cd ~/tr-be-script/Python-3.3.2
+wget http://www.python.org/ftp/python/3.5.0/Python-3.5.0a4.tgz 
+tar -xvzf Python-3.5.0a4.tgz 
+cd ~/tr-be-script/Python-3.5.0
 ./configure --prefix=/usr/local/python3.3
 make -j${JOBS}
 sudo make install -j${JOBS}
-sudo ln -s /usr/local/python3.3/bin/python /usr/bin/python3.3
+sudo ln -s /usr/local/python3.3/bin/python /usr/bin/python3.5
 cd ~/tr-be-script
 
 if [ ${SKIP} = 1 ]; then
@@ -76,9 +76,9 @@ clear
 echo
 echo "Installing CCache!"
 echo
-wget http://www.samba.org/ftp/ccache/ccache-3.1.9.tar.gz
-tar -xvzf ccache-3.1.9.tar.gz
-cd ~/tr-be-script/ccache-3.1.9
+wget http://www.samba.org/ftp/ccache/ccache-3.2.tar.gz
+tar -xvzf ccache-3.2.tar.gz
+cd ~/tr-be-script/ccache-3.2
 ./configure
 make -j${JOBS}
 sudo make install -j${JOBS}
@@ -94,15 +94,6 @@ fi
 
 clear
 
-echo
-echo "Installing JDK 6!"
-echo
-wget https://launchpad.net/~webupd8team/+archive/ubuntu/java/+files/oracle-java6-installer_6u45-0%7Ewebupd8%7E8_all.deb
-sudo dpkg -i oracle-java6-installer_6u45-0~webupd8~8_all.deb
-wget https://launchpad.net/~webupd8team/+archive/ubuntu/java/+files/oracle-java6-set-default_6u45-0%7Ewebupd8%7E8_all.deb
-sudo dpkg -i oracle-java6-set-default_6u45-0~webupd8~8_all.deb
-
-
 if [ ${SKIP} = 1 ]; then
   echo "Unattended installation. skipping pause..."
 else
@@ -115,9 +106,9 @@ echo
 echo "Installing GNU Make!"
 echo
 cd ~/tr-be-script
-wget http://ftp.gnu.org/gnu/make/make-3.82.tar.gz
-tar -xvzf make-3.82.tar.gz
-cd ~/tr-be-script/make-3.82
+wget http://ftp.gnu.org/gnu/make/make-4.1.tar.gz
+tar -xvzf make-4.1.tar.gz
+cd ~/tr-be-script/make-4.1
 ./configure
 sudo make install -j${JOBS}
 cd ~/
@@ -197,33 +188,14 @@ if [ `getconf LONG_BIT` = "64" ]
 then
         echo
         echo "Downloading SDK for 64bit Linux System"
-        wget http://dl.google.com/android/adt/adt-bundle-linux-x86_64-20140702.zip
+        wget http://dl.google.com/android/android-sdk_r24.1.2-linux.tgz
         echo "Download Complete!!"
         echo "Extracting"
         mkdir ~/adt-bundle
-        mv adt-bundle-linux-x86_64-20140702.zip ~/adt-bundle/adt_x64.zip
+        mv android-sdk_r24.1.2-linux.tgz~/adt-bundle/adt_x64.tgz
         cd ~/adt-bundle
-        unzip adt_x64.zip
-        mv -f adt-bundle-linux-x86_64-20140702/* .
-        echo "Configuring environment"
-        echo -e '\n# Android tools\nexport PATH=${PATH}:~/adt-bundle/sdk/tools\nexport PATH=${PATH}:~/adt-bundle/sdk/platform-tools\nexport PATH=${PATH}:~/bin' >> ~/.bashrc
-        echo -e '\nPATH="$HOME/adt-bundle/sdk/tools:$HOME/adt-bundle/sdk/platform-tools:$PATH"' >> ~/.profile
-        echo "Placing desktop shortcuts"
-        ln -s ~/adt-bundle/eclipse/eclipse ~/Desktop/Eclipse
-        ln -s ~/adt-bundle/sdk/tools/android ~/Desktop/SDK-Manager
-        echo "Done!!"
-else
-
-        echo
-        echo "Downloading SDK for 32bit Linux System"
-        wget http://dl.google.com/android/adt/adt-bundle-linux-x86-20140702.zip
-        echo "Download Complete!!"
-        echo "Extracting"
-        mkdir ~/adt-bundle
-        mv adt-bundle-linux-x86-20140702.zip ~/adt-bundle/adt_x86.zip
-        cd ~/adt-bundle
-        unzip adt_x86.zip
-        mv -f adt-bundle-linux-x86_64-20140702/* .
+        tar -xvzf adt_x64.tgz
+        mv -f android-sdk_r24.1.2-linux/* .
         echo "Configuring environment"
         echo -e '\n# Android tools\nexport PATH=${PATH}:~/adt-bundle/sdk/tools\nexport PATH=${PATH}:~/adt-bundle/sdk/platform-tools\nexport PATH=${PATH}:~/bin' >> ~/.bashrc
         echo -e '\nPATH="$HOME/adt-bundle/sdk/tools:$HOME/adt-bundle/sdk/platform-tools:$PATH"' >> ~/.profile
@@ -262,25 +234,6 @@ fi
 clear
 
 echo
-echo "Cleaning up temporary files..."
-echo
-rm -f ~/tr-be-script/Python-3.3.2.tgz
-sudo rm -rf ~/tr-be-script/Python-3.3.2
-rm -f ~/tr-be-script/make-3.82.tar.gz
-rm -rf ~/tr-be-script/make-3.82
-rm -f ~/tr-be-script/ccache-3.1.9.tar.gz
-rm -rf ~/tr-be-script/ccache-3.1.9
-rm -rf ~/adt-bundle/adt-bundle-linux-x86_64-20140702
-rm -rf ~/adt-bundle/adt-bundle-linux-x86-20140702
-rm -f ~/adt-bundle/adt_x64.zip
-rm -f ~/adt-bundle/adt_x86.zip
-rm -f ~/tr-be-script/master.zip
-rm -f ~/oracle-java6-installer_6u45-0~webupd8~8_all.deb
-rm -f ~/oracle-java6-set-default_6u45-0~webupd8~8_all.deb
-
-clear
-
-echo
 echo "Done!"
 echo
 echo "Cheers!"
@@ -291,7 +244,7 @@ echo
 echo "Credits:"
 echo 
 echo "Script created by:"
-echo "> [T E A M  R A D I U M] <"
+echo "> [azuone] <"
 echo 
 read -p "Press [Enter] key to exit..."
 exit
